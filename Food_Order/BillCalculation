@@ -1,0 +1,13 @@
+import java.util.*;
+public class BillCalculation{
+      int sno;
+      String Foodname="";
+      int Quantity=0,price=0;
+    BillCalculation(String Foodname,int Quantity,int price){
+        this.Foodname=Foodname;
+        this.Quantity=Quantity;
+        this.price=price;
+        this.sno = 1;
+    }
+    
+}
