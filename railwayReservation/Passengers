@@ -1,0 +1,17 @@
+public class Passengers{
+    static int id=0;
+    String name="";
+    int age=0;
+    String preferencePerth="";
+    int passengerId=0;
+    String alloted;
+    int number=0;
+    Passengers(String name,int age,String preferencePerth){
+        this.name=name;
+        this.age=age;
+        this.preferencePerth=preferencePerth;
+        this.passengerId=id++;
+        alloted="";
+        number=-1;
+    }
+}
