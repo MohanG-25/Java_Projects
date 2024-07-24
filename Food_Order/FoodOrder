@@ -1,0 +1,138 @@
+import java.util.*;
+public class FoodOrder{
+    static int idli=100;
+    static int dosa=100;
+   static  int biryani=500;
+   static  int icecream=200;
+    static int frenchfries=450;
+    static int rice=230;
+    static int total=0;
+    static int quantity=0;
+    static int count=1;
+    static int price=0;
+    static HashMap<Integer,BillCalculation> m=new HashMap<Integer,BillCalculation>();
+    public static void Calculate(BillCalculation a){
+        count=m.size()+1;
+        m.put(count,a);
+    }
+    public static void print(){
+        // for(BillCalculation a:m.values()){
+        //         System.out.println("  "+a.sno+"  "+a.Foodname+"       "+a.Quantity+"          "+a.price*a.Quantity);
+        // }
+        // for(Map.Entry<Integer,BillCalculation> entry:m.entrySet()){
+        //     BillCalculation bill=entry.getValue();
+        //     System.out.println("  "+entry.getKey()+"  "+bill.Foodname+"       "+bill.Quantity+"          "+bill.price*bill.Quantity);
+        // }
+        for (Map.Entry<Integer, BillCalculation> entry : m.entrySet()) {
+            int sno = entry.getKey();
+            BillCalculation bill = entry.getValue();
+            System.out.println("    "+sno + "  " + bill.Foodname + "    " + bill.Quantity + "        " + bill.price * bill.Quantity);
+        }
+    }
+    public static void orderFood(){
+        Scanner s=new Scanner(System.in);
+         String b="y";
+          while(b.equals("y")){
+             System.out.println("************* MENU DETAILS ***************");
+             System.out.println(" IDLI--------:100");
+             System.out.println(" DOSA--------:100");
+             System.out.println(" BIRYANI-----:500");
+             System.out.println(" ICECREAM----:200");
+             System.out.println(" FRENCHFRIES-:450");
+             System.out.println(" RICE--------:230");
+             System.out.print("enter your desired food:");
+             String food=s.next();
+             switch(food){
+                case "idli":
+                    System.out.println("enter your quantity:");
+                    quantity=s.nextInt();
+                     price=getPrice(1);
+                     BillCalculation b1=new BillCalculation("idli",quantity,price);
+                    Calculate(b1);
+                    //Calculate(new BillCalculation("idli", quantity, idli),count++);
+                    total+=quantity*idli;
+                    break;
+                case "dosa":
+                    System.out.println("enter your quantity:");
+                    quantity=s.nextInt();
+                    price=getPrice(2);
+                    BillCalculation b2=new BillCalculation("dosa",quantity,price);
+                     Calculate(b2);
+                    //Calculate(new BillCalculation("dosa", quantity, dosa),count++);
+                    total+=quantity*dosa;
+                    break;
+                case "biryani":
+                    System.out.println("enter your quantity:");
+                    quantity=s.nextInt();
+                    price=getPrice(3);
+                     BillCalculation b3=new BillCalculation("biryani",quantity,price);
+                    Calculate(b3);
+                    //Calculate(new BillCalculation("biryani", quantity, biryani),count++);
+                    total+=quantity*biryani;
+                    break;
+                 case "icecream":
+                    System.out.println("enter your quantity:");
+                    quantity=s.nextInt();
+                    price=getPrice(4);
+                     BillCalculation b4=new BillCalculation("icecream",quantity,price);
+                     Calculate(b4);
+                    //Calculate(new BillCalculation("icecreami", quantity, icecream),count++);
+                    total+=quantity*icecream;
+                    break;
+                case "frenchfries":
+                    System.out.println("enter your quantity:");
+                    quantity=s.nextInt();
+                    price=getPrice(5);
+                    BillCalculation b5=new BillCalculation("frenchfries",quantity,price);
+                    Calculate(b5);
+                    //Calculate(new BillCalculation("frenchfries", quantity, frenchfries),count++);
+                    total+=quantity*frenchfries;
+                    break;
+                case "rice":
+                    System.out.println("enter your quantity:");
+                    quantity=s.nextInt();
+                    price=getPrice(6);
+                    BillCalculation b6=new BillCalculation("rice",quantity,price);
+                    Calculate(b6);
+                  //  Calculate(new BillCalculation("rice", quantity, rice),count++);
+                    total+=quantity*rice;
+                    break;
+                default:
+                    break;
+             }
+             System.out.println("do you want still ordering(y/n):");
+             b=s.next();
+             b=b.toLowerCase();
+          }
+    }
+
+    public static void Bill(){
+        System.out.println("*******   YOUR BILL  *********");
+        System.out.print(" ");
+        System.out.println("SNO"+" "+"Foodname"+"  "+"Quantity"+"  "+"Price");
+        print();
+        System.out.println("                        ******************");
+        System.out.println("                        Total :"+" "+total);
+        System.out.println("                        ******************");
+        System.out.print(" ");
+        System.out.println("*******   THANK YOU *********");
+    }
+    private  static int getPrice(int choice) {
+    switch (choice) {
+        case 1:
+            return 100; // Price of Idli
+        case 2:
+            return 100; // Price of Dosa
+        case 3:
+            return 500;
+        case 4:
+            return 400;
+        case 5:
+            return 250;
+        case 6:
+            return 430;
+        default:
+            return 0; // Invalid choice, return 0 price
+    }
+}
+}
