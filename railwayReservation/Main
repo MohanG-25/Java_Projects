@@ -1,0 +1,110 @@
+import java.util.*;
+public class Main{
+    public static void bookTicket(Passengers p){
+        TicketBooker booker=new TicketBooker();
+        if(booker.availableWaitingperths==0){
+            System.out.println("no tickets available!");
+            
+        }
+        if(p.preferencePerth.equals("L") && booker.availableLowerperths>0 || p.preferencePerth.equals('M')&& booker.availableMiddleperths>0 || p.preferencePerth.equals("U") && booker.availableUpperperths>0){
+            System.out.println("prefered perth is available.");
+            if(p.preferencePerth.equals("L")){
+                 System.out.println("lower perth is given.");
+                 booker.bookingTicket(p,(booker.lowerperthpositons.get(0)),"L");
+                 booker.lowerperthpositons.remove(0);
+                 booker.availableLowerperths--;
+            }
+            else if(p.preferencePerth.equals("M")){
+                System.out.println("middle perth is given.");
+                booker.bookingTicket(p,(booker.middleperthpositons.get(0)),"M");
+                booker.middleperthpositons.remove(0);
+                booker.availableMiddleperths--;
+            }
+            else if(p.preferencePerth.equals("U")){
+                System.out.println("upper berth is given.");
+                booker.bookingTicket(p,(booker.upperperthpositons.get(0)),"U");
+                booker.upperperthpositons.remove(0);
+                booker.availableUpperperths--;
+            }
+        }
+        else if(booker.availableLowerperths>0){
+            System.out.println("lower perth is given.");
+            booker.bookingTicket(p,(booker.lowerperthpositons.get(0)),"L");
+            booker.lowerperthpositons.remove(0);
+            booker.availableLowerperths--;
+        }
+        else if(booker.availableMiddleperths>0){
+            System.out.println("midle perth is given.");
+            booker.bookingTicket(p,(booker.middleperthpositons.get(0)),"M");
+            booker.middleperthpositons.remove(0);
+            booker.availableMiddleperths--;
+        }
+        else if(booker.availableUpperperths>0){
+            System.out.println("upper perth is given.");
+            booker.bookingTicket(p,(booker.upperperthpositons.get(0)),"U");
+            booker.upperperthpositons.remove(0);
+            booker.availableUpperperths--;
+        }
+        else if(booker.availableRACperths>0){
+            System.out.println("rac is available.");
+            booker.addRAC(p,(booker.racperthpositons.get(0)),"RAC");
+        }
+        else if(booker.availableWaitingperths>0){
+            System.out.println("wl is available>");
+            booker.addWL(p,(booker.wlperthpositions.get(0)),"WL");
+        }
+    }
+    public static void Cancel(int t){
+        TicketBooker booker=new TicketBooker();
+        if(!booker.m.containsKey(t)){
+             System.out.println("unknown details.");
+        }
+        else{
+           booker.CancelTicket(t);
+        }
+    }
+    public  static void main(String args[]){
+        Scanner s=new Scanner(System.in);
+        boolean b=true;
+        String name="";
+        int age=0;
+        String preferencePerth="";
+        while(b){
+            System.out.println("1.Book Ticket\n2.Cancel Ticket\n3.Printing available Tickets\n4.Booked Passengers Details\n5.Exit");
+            System.out.println("enter your choice:");
+            int c=s.nextInt();
+            switch(c){
+                case 1:{
+                    System.out.println("enter name:");
+                    name=s.next();
+                    System.out.println("enter age:");
+                    age=s.nextInt();
+                    System.out.println("enter preference perth:");
+                    preferencePerth=s.next();
+                    Passengers p=new Passengers(name,age,preferencePerth);
+                    bookTicket(p);
+                }
+                 break;   
+                case 2:
+                   System.out.println("enter the id to cancel it.");
+                   int t=s.nextInt();
+                   Cancel(t);
+                   break; 
+                case 3:
+                    TicketBooker booker=new TicketBooker();
+                    booker.printList();
+                   break;
+                case 4:
+                    TicketBooker br=new TicketBooker();
+                    br.bookList();
+                  break;
+                case 5:
+                    b=false;
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
+}
