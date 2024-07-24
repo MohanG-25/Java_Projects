@@ -1,0 +1,106 @@
+import java.util.*;
+public class TicketBooker{
+    static int availableLowerperths=1;
+    static int availableMiddleperths=1;
+    static int availableUpperperths=1;
+    static int availableRACperths=1;
+    static int availableWaitingperths=1;
+
+    static Queue<Integer> rac=new LinkedList<Integer>();
+    static Queue<Integer> wl=new LinkedList<Integer>();
+    static List<Integer> bookedList=new LinkedList<Integer>();
+
+    static HashMap<Integer,Passengers> m=new HashMap<Integer,Passengers>();
+
+   static  List<Integer> lowerperthpositons=new ArrayList<Integer>(Arrays.asList(1));
+    static List<Integer> middleperthpositons=new ArrayList<Integer>(Arrays.asList(1));
+    static List<Integer> upperperthpositons=new ArrayList<Integer>(Arrays.asList(1));
+    static List<Integer> racperthpositons=new ArrayList<Integer>(Arrays.asList(1));
+    static List<Integer> wlperthpositions=new ArrayList<Integer>(Arrays.asList(1));
+
+    public static void bookingTicket(Passengers p,int number,String alloted){
+        p.number=number;
+        p.alloted=alloted;
+        m.put(p.passengerId,p);
+        bookedList.add(p.passengerId);
+        System.out.println("booked successfully!");
+    }
+    public static void addRAC(Passengers p,int number,String alloted){
+        p.number=number;
+        p.alloted=alloted;
+        m.put(p.passengerId,p);
+        rac.add(p.passengerId);
+        racperthpositons.remove(0);
+        availableRACperths--;
+        System.out.println("addet to rac success!");
+    }
+    public static void addWL(Passengers p,int number,String alloted){
+        p.number=number;
+        p.alloted=alloted;
+        m.put(p.passengerId,p);
+        wl.add(p.passengerId);
+        wlperthpositions.remove(0);
+        availableWaitingperths--;
+        System.out.println("added to wl succcess!");
+    }
+    public static void printList(){
+        System.out.println("availableLowerperths:"+availableLowerperths);
+        System.out.println("availableMiddleperths:"+availableMiddleperths);
+        System.out.println("availableUpperperths:"+availableUpperperths);
+        System.out.println("availableRACperths:"+availableRACperths);
+        System.out.println("availableWLperths:"+availableWaitingperths);
+    }
+    public static void bookList(){
+        if(m.size()==0){
+             System.out.println("no booked tickets!");
+        }
+        for(Passengers p:m.values()){
+           System.out.println("name:"+p.name);
+           System.out.println("age:"+p.age);
+           System.out.println("perth status:"+p.preferencePerth);
+           System.out.println("number:"+p.number+"alloted:"+p.alloted);
+        }
+    }
+    public static void CancelTicket(int t){
+        Passengers p=m.get(t);
+        m.remove(t);
+        bookedList.remove(t);
+        int positionNumber=p.number;
+        System.out.println("canceled successfully");
+        if(p.alloted.equals("L")){
+             availableLowerperths++;
+             lowerperthpositons.add(positionNumber);
+        }
+        else if(p.alloted.equals("M")){
+             availableMiddleperths++;
+             middleperthpositons.add(positionNumber);
+        }
+        else if(p.alloted.equals("U")){
+              availableUpperperths++;
+              upperperthpositons.add(positionNumber);
+        }
+        if(rac.size()>0){
+           Passengers passengersfromrac=m.get(rac.poll());
+           int positonrac=passengersfromrac.number;
+           racperthpositons.add(positonrac);
+           rac.remove(t);
+           availableRACperths++;
+           if(wl.size()>0){
+              Passengers passengersfromwl=m.get(wl.poll());
+              int positonwl=passengersfromwl.number;
+              wlperthpositions.add(positonwl);
+              wl.remove(t);
+              
+
+               passengersfromwl.number=racperthpositons.get(0);
+              passengersfromwl.alloted="RAC";
+              racperthpositons.remove(0);
+              rac.add(t);
+
+              availableWaitingperths++;
+              availableRACperths--;
+           }
+           Main.bookTicket(passengersfromrac);
+        }
+    }
+}
